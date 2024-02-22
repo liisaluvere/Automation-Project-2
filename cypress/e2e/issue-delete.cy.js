@@ -49,6 +49,7 @@ describe("Issue deleting", () => {
 
     cy.get('[data-testid="modal:confirm"]').should("not.exist");
     cy.get('[data-testid="icon:close"]').first().click();
+    cy.get('[data-testid="modal:issue-details"]').should("not.exist");
 
     cy.get('[data-testid="board-list:backlog"]').within(() => {
       cy.contains(firstIssueTitle).should("be.visible");
