@@ -208,4 +208,24 @@ describe("Issue create", () => {
       );
     });
   });
+
+  it("Should remove unnecessary spaces in board view", () => {
+    const titleWithSpaces = "Hello    World";
+    const titleTrimmed = titleWithSpaces.trim();
+
+    cy.get('[data-testid="modal:issue-create"]').within(() => {
+      cy.get('[data-testid="select:type"]').click();
+      cy.get('[data-testid="select-option:Story"]').click();
+      cy.get('[data-testid="select:userIds"]').click();
+      cy.get('[data-testid="select-option:Baby Yoda"]').click();
+      cy.get('input[name="title"]').type(titleWithSpaces);
+      cy.get('button[type="submit"]').click();
+    });
+
+    cy.contains("Issue has been successfully created.").should("be.visible");
+
+    cy.get('[data-testid="board-list:backlog"]')
+      .first()
+      .should("contain", titleTrimmed);
+  });
 });
